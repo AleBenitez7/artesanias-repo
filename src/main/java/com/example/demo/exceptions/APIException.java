@@ -1,6 +1,6 @@
 package com.example.demo.exceptions;
 
-public class APIException extends Exception{
+public class APIException {
     private Code code;
     private String type;
     public static final String DEFAULT_CODE = "def001";
@@ -27,7 +27,7 @@ public class APIException extends Exception{
     } 
 
     public APIException(String message) {
-        super(message);
+        super();
         this.code = Code.GENERAL_EXCEPTION;
         this.type = "tipo";
     }

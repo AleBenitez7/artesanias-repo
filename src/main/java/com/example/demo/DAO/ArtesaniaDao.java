@@ -7,7 +7,7 @@ import com.example.demo.model.Artesania;
 public interface ArtesaniaDao {
     int save(Artesania artesania);
     int update (Artesania artesania, Long id);
-    int delete (Long id);
+    int delete(Artesania artesania,Long id);
     Artesania getById(Long id);
     List<Artesania>getAll();
 }
