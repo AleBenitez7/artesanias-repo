@@ -5,6 +5,9 @@ import java.util.List;
 import com.example.demo.model.Artesania;
 
 public interface ArtesaniaDao {
-    Artesania findByName(String nombre);
-    List<Artesania>findAll();
+    int save(Artesania artesania);
+    int update (Artesania artesania, Long id);
+    int delete (Long id);
+    Artesania getById(Long id);
+    List<Artesania>getAll();
 }

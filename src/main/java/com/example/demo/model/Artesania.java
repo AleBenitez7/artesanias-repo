@@ -75,5 +75,8 @@ public class Artesania {
 		return "Artesania [id=" + id + ", tipo=" + tipo + ", nombre=" + nombre + ", color=" + color +"precio="+precio
 				+ "]";
 	}
+    public String save(Artesania artesania) {
+        return null;
+    }
 
 }

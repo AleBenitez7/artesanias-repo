@@ -8,9 +8,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import com.example.demo.DAO.ArtesaniaDao;
 import com.example.demo.model.Artesania;
-import com.example.demo.repository.ArtesaniaRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,66 +25,35 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/api/")
 public class ArtesaniasController {
 
     @Autowired
-    private ArtesaniaRepository artesaniaRepository;
+    private ArtesaniaDao aDAO;
      @GetMapping("/artesanias")
-    public List <Artesania> getAllArtesanias(){
-        return artesaniaRepository.findAll();
+    public List <Artesania> getArtesanias(){
+        return aDAO.getAll();
     }
 
     @GetMapping("/artesanias/{id}")
-    public ResponseEntity<Artesania> getArtesaniaById(@PathVariable("id") Long id) {
-      Artesania artesania = artesaniaRepository.findById(id);
-  
-      if (artesania != null) {
-        return new ResponseEntity<>(artesania, HttpStatus.OK);
-      } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-      }
+    public Artesania getArtesaniaById(@PathVariable Long id) {
+      aDAO.getById(id);
+      return aDAO.getById(id);
     }
   
     @PostMapping("/artesanias")
-    public ResponseEntity<String> createArtesania(@RequestBody Artesania artesania) {
-      try {
-        artesaniaRepository.save(new Artesania(artesania.getTipo(), artesania.getNombre(), artesania.getColor(), artesania.getPrecio()));
-        return new ResponseEntity<>("Artesania was created successfully.", HttpStatus.CREATED);
-      } catch (Exception e) {
-        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-      }
+    public String createArtesania(@RequestBody Artesania artesania) {
+      return aDAO.save(artesania)+" No. of rows saved in the database";
     }
 
   @PutMapping("/artesanias/{id}")
-  public ResponseEntity<String> updateArtesania(@PathVariable("id") long id, @RequestBody Artesania artesania) {
-    Artesania _artesania = artesaniaRepository.findById(id);
-
-    if (_artesania != null) {
-        _artesania.setId(id);
-        _artesania.setTipo(artesania.getTipo());
-        _artesania.setNombre(artesania.getNombre());
-        _artesania.setColor(artesania.getColor());
-        _artesania.setPrecio(artesania.getPrecio());
-
-      artesaniaRepository.update(_artesania);
-      return new ResponseEntity<>("Artesania was updated successfully.", HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>("Cannot find Artesania with id=" + id, HttpStatus.NOT_FOUND);
-    }
+  public String updateArtesania(@PathVariable long id, @RequestBody Artesania artesania) {
+      return aDAO.update(artesania, id)+" No of rows updated in the databse";
   }
 
   @DeleteMapping("/artesanias/{id}")
-  public ResponseEntity<String> deleteArtesania(@PathVariable("id") long id) {
-    try {
-      int result = artesaniaRepository.deleteById(id);
-      if (result == 0) {
-        return new ResponseEntity<>("Cannot find Artesania with id=" + id, HttpStatus.OK);
-      }
-      return new ResponseEntity<>("Artesania was deleted successfully.", HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>("Cannot delete Artesania.", HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  public String deleteArtesania(@PathVariable long id) {
+    return aDAO.delete(id)+ " No. of rows deleted in the database";
+    
   }
     /*@GetMapping("/artesanias")
     public List <Artesania> getAllArtesanias(){
