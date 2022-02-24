@@ -34,11 +34,17 @@ public class ArtesaniaDaoImpl implements ArtesaniaDao{
 
     @Override
     public Artesania getById(Long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM artesanias WHERE id=?", new BeanPropertyRowMapper<Artesania>(Artesania.class), id);
+        Artesania artesania= null;
+        try {
+            artesania =jdbcTemplate.queryForObject("SELECT * FROM artesanias WHERE id=?", new BeanPropertyRowMapper<Artesania>(Artesania.class), id);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return artesania;
     }
 
     @Override
-    public int delete( Artesania artesania, Long id) {
+    public int delete( Long id) {
         return jdbcTemplate.update("DELETE FROM artesanias WHERE id=?", id);
     }
     
