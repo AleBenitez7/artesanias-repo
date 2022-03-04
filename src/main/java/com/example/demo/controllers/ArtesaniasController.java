@@ -1,21 +1,12 @@
 package com.example.demo.controllers;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 import com.example.demo.DAO.ArtesaniaDao;
 import com.example.demo.exception.ArtesaniaNotfoundException;
 import com.example.demo.model.Artesania;
 
-import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
+
+
 @RestController
 public class ArtesaniasController {
 
@@ -81,6 +74,7 @@ public class ArtesaniasController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
   }*/
+  
   @DeleteMapping("/artesanias/{id}")
   public ResponseEntity<Object> deleteArtesania(@PathVariable Long id) {
     Artesania artesania = aDAO.getById(id);
